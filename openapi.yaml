@@ -14,7 +14,8 @@ paths:
   /predict:
     post:
       operationId: predict
-      security: [{ apiKey: [] }]
+      security:
+        - apiKey: []
       requestBody:
         required: true
         content:
@@ -33,20 +34,31 @@ paths:
               schema:
                 type: object
                 properties:
-                  probability: { type: number }
-                  risk_label: { type: string, enum: [high, low] }
-                  explain_method: { type: string }
+                  probability:
+                    type: number
+                  risk_label:
+                    type: string
+                    enum: [high, low]
+                  explain_method:
+                    type: string
                   top_reasons:
                     type: array
                     items:
                       type: object
                       properties:
-                        feature: { type: string }
-                        impact_strength: { type: number }
-                        direction: { type: string }
-                        reason: { type: string }
-                        measures: { type: object, additionalProperties: true }
+                        feature:
+                          type: string
+                        impact_strength:
+                          type: number
+                        direction:
+                          type: string
+                        reason:
+                          type: string
+                        measures:
+                          type: object
+                          additionalProperties: true
 components:
+  schemas: {}
   securitySchemes:
     apiKey:
       type: apiKey
