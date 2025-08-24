@@ -33,7 +33,7 @@ class PredictRequest(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "okkk"}
 
 @app.post("/predict", dependencies=[Depends(require_api_key)])
 def predict(req: PredictRequest):
