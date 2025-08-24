@@ -1,21 +1,22 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Attrition Copilot API
   version: "1.0.0"
 servers:
   - url: https://attrition-copilot-api.onrender.com
+
 paths:
   /health:
     get:
       operationId: health
-      security: []
+      security: []   # kein API-Key nötig
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthResponse'
+                $ref: "#/components/schemas/HealthResponse"
 
   /predict:
     post:
@@ -27,14 +28,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PredictRequest'
+              $ref: "#/components/schemas/PredictRequest"
       responses:
         "200":
           description: Prediction response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PredictResponse'
+                $ref: "#/components/schemas/PredictResponse"
 
 components:
   schemas:
@@ -56,6 +57,8 @@ components:
           Age: 29
           MonthlyIncome: 2500
           OverTime: "Yes"
+          DistanceFromHome: 20
+          BusinessTravel: "Travel_Frequently"
 
     PredictResponse:
       type: object
