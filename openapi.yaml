@@ -3,7 +3,7 @@ info:
   title: Attrition Copilot API
   version: "1.0.0"
 servers:
-  - url: https://attrition-copilot-api.onrender.com   # deine Render-URL
+  - url: https://attrition-copilot-api.onrender.com
 paths:
   /health:
     get:
