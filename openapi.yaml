@@ -6,19 +6,21 @@ servers:
   - url: https://attrition-copilot-api.onrender.com
 paths:
   /health:
-    get:
-      operationId: health
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: "ok"
+  get:
+    operationId: health
+    security: []   # <--- wichtig: explizit KEINE API Key Security
+    responses:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "ok"
+
   /predict:
     post:
       operationId: predict
