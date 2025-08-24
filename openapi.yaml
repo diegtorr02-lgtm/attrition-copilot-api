@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: Attrition Copilot API
   version: "1.0.0"
@@ -15,10 +15,79 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ok
+                $ref: '#/components/schemas/HealthResponse'
+
+  /predict:
+    post:
+      operationId: predict
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PredictRequest'
+      responses:
+        "200":
+          description: Prediction response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PredictResponse'
+
 components:
-  schemas: {}
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: okkkkk
+
+    PredictRequest:
+      type: object
+      properties:
+        features:
+          type: object
+          additionalProperties: true
+      example:
+        features:
+          Age: 29
+          MonthlyIncome: 2500
+          OverTime: "Yes"
+
+    PredictResponse:
+      type: object
+      properties:
+        probability:
+          type: number
+          example: 0.725
+        risk_label:
+          type: string
+          enum: [high, low]
+          example: high
+        explain_method:
+          type: string
+        top_reasons:
+          type: array
+          items:
+            type: object
+            properties:
+              feature:
+                type: string
+              impact_strength:
+                type: number
+              direction:
+                type: string
+              reason:
+                type: string
+              measures:
+                type: object
+                additionalProperties: true
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
