@@ -4,7 +4,6 @@ info:
   version: "1.0.0"
 servers:
   - url: https://attrition-copilot-api.onrender.com
-
 paths:
   /health:
     get:
@@ -20,7 +19,6 @@ paths:
                   status:
                     type: string
                     example: ok
-
   /predict:
     post:
       operationId: predict
@@ -35,18 +33,10 @@ paths:
               properties:
                 features:
                   type: object
-                  description: Input employee features
-                  example:
-                    Age: 29
-                    MonthlyIncome: 2500
-                    OverTime: "Yes"
-                    DistanceFromHome: 20
-                    BusinessTravel: "Travel_Frequently"
-                    JobSatisfaction: 2
-                    YearsAtCompany: 1
+                  additionalProperties: true
       responses:
         "200":
-          description: Prediction response
+          description: OK
           content:
             application/json:
               schema:
@@ -54,11 +44,9 @@ paths:
                 properties:
                   probability:
                     type: number
-                    example: 0.725
                   risk_label:
                     type: string
                     enum: [high, low]
-                    example: high
                   explain_method:
                     type: string
                   top_reasons:
@@ -77,8 +65,8 @@ paths:
                         measures:
                           type: object
                           additionalProperties: true
-
 components:
+  schemas: {}   # <- LEERER OBJEKTBLOCK, verhindert den Fehler
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
