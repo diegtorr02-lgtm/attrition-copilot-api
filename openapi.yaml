@@ -8,6 +8,7 @@ paths:
   /health:
     get:
       operationId: health
+      security: []   # kein API-Key nötig
       responses:
         "200":
           description: OK
@@ -18,7 +19,7 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: ok
+                    example: okkkkk
   /predict:
     post:
       operationId: predict
@@ -36,37 +37,27 @@ paths:
                   additionalProperties: true
       responses:
         "200":
-          description: OK
+          description: Prediction response
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  probability:
-                    type: number
-                  risk_label:
-                    type: string
-                    enum: [high, low]
-                  explain_method:
-                    type: string
+                  probability: { type: number }
+                  risk_label: { type: string, enum: [high, low] }
+                  explain_method: { type: string }
                   top_reasons:
                     type: array
                     items:
                       type: object
                       properties:
-                        feature:
-                          type: string
-                        impact_strength:
-                          type: number
-                        direction:
-                          type: string
-                        reason:
-                          type: string
-                        measures:
-                          type: object
-                          additionalProperties: true
+                        feature: { type: string }
+                        impact_strength: { type: number }
+                        direction: { type: string }
+                        reason: { type: string }
+                        measures: { type: object, additionalProperties: true }
 components:
-  schemas: {}   # <- LEERER OBJEKTBLOCK, verhindert den Fehler
+  schemas: {}   # <- leerer Block, damit GPT happy ist
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
