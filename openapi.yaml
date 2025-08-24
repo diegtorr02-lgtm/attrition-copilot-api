@@ -6,21 +6,18 @@ servers:
   - url: https://attrition-copilot-api.onrender.com
 paths:
   /health:
-  get:
-    operationId: health
-    security: []   # <--- wichtig: explizit KEINE API Key Security
-    responses:
-      "200":
-        description: OK
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                  example: "ok"
-
+    get:
+      operationId: health
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
   /predict:
     post:
       operationId: predict
@@ -51,16 +48,25 @@ paths:
                     enum: [high, low]
                   explain_method:
                     type: string
+                  top_reasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        feature:
+                          type: string
+                        impact_strength:
+                          type: number
+                        direction:
+                          type: string
+                        reason:
+                          type: string
+                        measures:
+                          type: object
+                          additionalProperties: true
 components:
   securitySchemes:
-    ApiKeyAuth:   # Name angepasst
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: x-api-key
-  schemas:
-    Dummy:       # Damit GPT keinen Fehler mehr wirft
-      type: object
-      properties:
-        ok:
-          type: string
-
