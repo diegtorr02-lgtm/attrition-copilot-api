@@ -58,7 +58,9 @@ paths:
                           type: object
                           additionalProperties: true
 components:
-  schemas: {}
+  schemas:
+    Dummy:
+      type: object
   securitySchemes:
     apiKey:
       type: apiKey
