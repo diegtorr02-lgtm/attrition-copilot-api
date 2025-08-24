@@ -1,34 +1,57 @@
 from __future__ import annotations
 from fastapi import FastAPI, HTTPException, Header, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any
 import os, pandas as pd
 
 from attrition_copilot import load_bundle, predict_for_employee, explain_instance
 
+# === API Key & Model Path aus Environment Variables ===
 API_KEY = os.getenv("ATTRITION_API_KEY", "dev-secret")
 MODEL_PATH = os.getenv("MODEL_PATH", "models/model.joblib")
 
+# === FastAPI App ===
 app = FastAPI(title="Attrition Copilot API", version="1.0.0")
+
+# === CORS Middleware (wichtig für Browser-Clients wie Hoppscotch / ChatGPT Actions) ===
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],        # für Tests: alle Domains zulassen
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# === Model Bundle laden ===
 _bundle = load_bundle(MODEL_PATH)
 
+# === API Key prüfen ===
 def require_api_key(x_api_key: str = Header(default="")):
     if x_api_key != API_KEY:
         raise HTTPException(401, "Invalid or missing API key")
     return True
 
+# === Request Schema ===
 class PredictRequest(BaseModel):
     features: Dict[str, Any]
 
+# === Health Endpoint ===
 @app.get("/health")
 def health(): 
     return {"status": "ok"}
 
+# === Prediction Endpoint ===
 @app.post("/predict", dependencies=[Depends(require_api_key)])
 def predict(req: PredictRequest):
     payload = {k: v for k, v in req.features.items() if v is not None}
+    
+    # Minimal-Check: Kernfelder
     if len(payload) < 5:
-        raise HTTPException(400, "Bitte mindestens ~5 Kernfelder angeben (z.B. Age, MonthlyIncome, OverTime, DistanceFromHome, BusinessTravel).")
+        raise HTTPException(
+            400, 
+            "Bitte mindestens ~5 Kernfelder angeben (z.B. Age, MonthlyIncome, OverTime, DistanceFromHome, BusinessTravel)."
+        )
 
     df = pd.DataFrame([payload])
     if "Attrition" not in df.columns:
