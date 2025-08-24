@@ -61,6 +61,9 @@ components:
   schemas:
     Dummy:
       type: object
+      properties:
+        placeholder:
+          type: string
   securitySchemes:
     apiKey:
       type: apiKey
