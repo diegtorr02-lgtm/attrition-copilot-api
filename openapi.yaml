@@ -21,48 +21,87 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PredictRequest'
+              type: object
+              properties:
+                features:
+                  type: object
+                  properties:
+                    Age: { type: integer }
+                    Attrition: { type: string }
+                    BusinessTravel: { type: string }
+                    DailyRate: { type: integer }
+                    Department: { type: string }
+                    DistanceFromHome: { type: integer }
+                    Education: { type: integer }
+                    EducationField: { type: string }
+                    EnvironmentSatisfaction: { type: integer }
+                    Gender: { type: string }
+                    HourlyRate: { type: integer }
+                    JobInvolvement: { type: integer }
+                    JobLevel: { type: integer }
+                    JobRole: { type: string }
+                    JobSatisfaction: { type: integer }
+                    MaritalStatus: { type: string }
+                    MonthlyIncome: { type: integer }
+                    MonthlyRate: { type: integer }
+                    NumCompaniesWorked: { type: integer }
+                    OverTime: { type: string }
+                    PercentSalaryHike: { type: integer }
+                    PerformanceRating: { type: integer }
+                    RelationshipSatisfaction: { type: integer }
+                    StockOptionLevel: { type: integer }
+                    TotalWorkingYears: { type: integer }
+                    TrainingTimesLastYear: { type: integer }
+                    WorkLifeBalance: { type: integer }
+                    YearsAtCompany: { type: integer }
+                    YearsInCurrentRole: { type: integer }
+                    YearsSinceLastPromotion: { type: integer }
+                    YearsWithCurrManager: { type: integer }
+                  required:
+                    - Age
+                    - BusinessTravel
+                    - Department
+                    - DistanceFromHome
+                    - Education
+                    - EducationField
+                    - Gender
+                    - JobRole
+                    - MaritalStatus
+                    - MonthlyIncome
+                    - OverTime
+                    - YearsAtCompany
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PredictResponse'
-components:
-  schemas:
-    PredictRequest:
-      type: object
-      properties:
-        features:
-          type: object
-          additionalProperties: true
-    PredictResponse:
-      type: object
-      properties:
-        probability:
-          type: number
-        risk_label:
-          type: string
-          enum: [high, low]
-        explain_method:
-          type: string
-        top_reasons:
-          type: array
-          items:
-            type: object
-            properties:
-              feature:
-                type: string
-              impact_strength:
-                type: number
-              direction:
-                type: string
-              reason:
-                type: string
-              measures:
                 type: object
-                additionalProperties: true
+                properties:
+                  probability:
+                    type: number
+                  risk_label:
+                    type: string
+                    enum: [high, low]
+                  explain_method:
+                    type: string
+                  top_reasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        feature:
+                          type: string
+                        impact_strength:
+                          type: number
+                        direction:
+                          type: string
+                        reason:
+                          type: string
+                        measures:
+                          type: object
+                          additionalProperties: true
+components:
   securitySchemes:
     apiKey:
       type: apiKey
