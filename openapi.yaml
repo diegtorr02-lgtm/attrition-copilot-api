@@ -102,6 +102,13 @@ paths:
                           type: object
                           additionalProperties: true
 components:
+  schemas:
+    Dummy:
+      type: object
+      properties:
+        ok:
+          type: string
+          example: "ok"
   securitySchemes:
     apiKey:
       type: apiKey
