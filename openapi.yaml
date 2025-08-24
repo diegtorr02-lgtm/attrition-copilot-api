@@ -21,49 +21,48 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                features:
-                  type: object
-                  additionalProperties: true
+              $ref: '#/components/schemas/PredictRequest'
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  probability:
-                    type: number
-                  risk_label:
-                    type: string
-                    enum: [high, low]
-                  explain_method:
-                    type: string
-                  top_reasons:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        feature:
-                          type: string
-                        impact_strength:
-                          type: number
-                        direction:
-                          type: string
-                        reason:
-                          type: string
-                        measures:
-                          type: object
-                          additionalProperties: true
+                $ref: '#/components/schemas/PredictResponse'
 components:
   schemas:
-    Dummy:
+    PredictRequest:
       type: object
       properties:
-        placeholder:
+        features:
+          type: object
+          additionalProperties: true
+    PredictResponse:
+      type: object
+      properties:
+        probability:
+          type: number
+        risk_label:
           type: string
+          enum: [high, low]
+        explain_method:
+          type: string
+        top_reasons:
+          type: array
+          items:
+            type: object
+            properties:
+              feature:
+                type: string
+              impact_strength:
+                type: number
+              direction:
+                type: string
+              reason:
+                type: string
+              measures:
+                type: object
+                additionalProperties: true
   securitySchemes:
     apiKey:
       type: apiKey
