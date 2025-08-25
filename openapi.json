@@ -3,8 +3,33 @@
   "info": {
     "title": "Attrition Copilot API",
     "version": "1.0.0",
-    "description": "Test-API für GPT Actions"
+    "description": "Minimal schema for GPT Actions import"
   },
-  "servers": [{ "url": "https://example.com" }],
-  "paths": {}
+  "servers": [
+    { "url": "https://example.com" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" }
+                  },
+                  "required": ["status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
