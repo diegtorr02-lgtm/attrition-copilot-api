@@ -1,0 +1,10 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Attrition Copilot API",
+    "version": "1.0.0",
+    "description": "Test-API für GPT Actions"
+  },
+  "servers": [{ "url": "https://example.com" }],
+  "paths": {}
+}
